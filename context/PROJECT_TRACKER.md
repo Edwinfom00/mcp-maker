@@ -24,6 +24,7 @@ The Next.js app exists at `apps/web`.
 | Foundation | Context files, agent workflow, architecture plan, security baseline | Complete |
 | Scaffold | Initialize `apps/web` with `pnpm create next-app@latest apps/web` | Complete |
 | Prototype Audit | Review `_proto` interface direction and update implementation prompt | Complete |
+| UI Foundation | Tailwind design-system primitives, shell, first routes from `_proto` | In progress |
 | Auth | Better Auth session model, protected routes, workspace access helpers | Pending |
 | Workspace | Workspace CRUD, membership, roles, workspace switcher | Pending |
 | Project | Project CRUD, repository metadata, project lifecycle | Pending |
@@ -62,9 +63,21 @@ The Next.js app exists at `apps/web`.
 
 ## Dependency Decisions
 
-Only scaffold dependencies have been installed for `apps/web`.
+Scaffold dependencies plus `react-icons` are installed for `apps/web`.
 
-Business dependencies such as Better Auth, Drizzle, Zod, Vitest, react-icons, DeepSeek, and MCP SDK are not installed yet.
+- `react-icons` was approved and installed on 2026-07-03 for the UI foundation. The Lucide set (`react-icons/lu`) is the sole icon source, wrapped by a central `Icon` registry in `design-system`.
+
+Business dependencies such as Better Auth, Drizzle, Zod, Vitest, DeepSeek, and MCP SDK are not installed yet.
+
+## Styling Decision
+
+- Styling uses Tailwind CSS only. No CSS modules and no additional component CSS files.
+- No inline `style={{ ... }}`.
+- Prototype tokens from `_proto/mcp-maker/theme.jsx` are translated to Tailwind arbitrary values (for example `bg-[#f6f7f9]`, `rounded-[10px]`, `shadow-[0_1px_2px_rgba(13,17,23,0.05)]`).
+- Dark mode uses a class strategy: `@custom-variant dark` in `globals.css` plus `dark:` variants on components. The `.dark` class is toggled on `<html>` by a pre-paint init script and the `ThemeToggle`.
+- Risk/status tone class strings live in `design-system/config/tone-classes.ts` as literal Tailwind class maps so the scanner keeps them.
+- `globals.css` stays minimal: Tailwind import, dark custom-variant, and `next/font` theme mapping only.
+- A prior CSS-modules attempt was removed before this decision; all `*.module.css` files were deleted.
 
 Next.js scaffold has been run for `apps/web`.
 
@@ -108,12 +121,24 @@ Before adding any dependency, create a short proposal with:
 - No cloud deploy or marketplace in MVP.
 - No telemetry.
 
-## Immediate Next Tasks
+## UI Foundation Progress
 
-1. Use `context/PROMPT_DESIGN_2.md` to implement the `_proto` interfaces faithfully.
-2. Add Better Auth, Drizzle, Zod, Vitest, react-icons, DeepSeek, and MCP SDK dependencies only after explicit dependency approval.
-3. Implement auth, workspace, and project foundations before F1.
-4. Implement F1 using module-first structure.
+Done (Tailwind-only, seeded data, no persistence yet):
+
+- Design-system primitives: `Icon` (Lucide registry), `Button`, `ButtonLink`, `Card`, `Field`, `Pill`, `RiskBadge`, `SegmentedControl` (native radios), `Stepper`, `SourceRow`, `SchemaPreview`, `Toggle` (native switch), `Avatar`.
+- Shell: `AppShell`, `TopNav`, workspace switcher (links to `/workspaces`), project switcher slot, `ThemeToggle`.
+- Routes: `/sign-in`, `/workspaces`, `/projects`, `/projects/new`, and `/` redirect to `/sign-in`. `(app)` route group hosts the shell.
+- Seeded auth session adapter (`getCurrentSession`/`requireSession`) as the Better Auth boundary until the library is installed.
+- Seed workspaces (`Aster Labs`, `Personal`, `Northwind Labs`) and seed projects (`aster/*`).
+
+Remaining for the interface slice:
+
+1. Build the project detail routes: `/projects/[projectId]` plus `analysis`, `architecture`, `tools`, `security`, `validation`, `generation`.
+2. Wire the project switcher to real navigation and the workspace switcher to a dropdown.
+3. Replace the seeded session adapter with Better Auth once the dependency is approved and installed.
+4. Add the analysis, tool proposal, security review, human validation, and generation views from `_proto`.
+5. Add Better Auth, Drizzle, Zod, Vitest, DeepSeek, and MCP SDK dependencies only after explicit approval.
+6. Implement F1 using module-first structure.
 
 ## Verification Notes
 
@@ -137,3 +162,5 @@ Before adding any dependency, create a short proposal with:
 - `context/PROTO_INTERFACE_REVIEW.md` records the interface verdict, required corrections, and implementation readiness.
 - `context/PROMPT_DESIGN_2.md` was upgraded into a pixel-faithful implementation prompt for Claude Code.
 - `context/SKILLS.md` records the local skill stack required for design and implementation handoff.
+- UI foundation implemented with Tailwind only; `pnpm typecheck`, `pnpm lint`, `pnpm test`, and `pnpm build` all pass. Build generates `/`, `/sign-in`, `/workspaces`, `/projects`, `/projects/new`.
+- An earlier CSS-modules implementation of the same slice was deleted before the Tailwind-only rebuild; no `*.module.css` files remain.

@@ -29,7 +29,9 @@
 - Use Vitest for tests.
 - Use Biome for lint and format.
 - Use DeepSeek API as AI planning layer.
-- Use `react-icons` for icons per `context/AGENTS.md`.
+- Use `react-icons` for icons per `context/AGENTS.md`. Installed 2026-07-03; Lucide set (`react-icons/lu`) is the only source, wrapped by a central `Icon` registry in `design-system`.
+- Styling is Tailwind CSS only. No CSS modules, no per-component CSS files, no inline `style`. Prototype tokens are translated to Tailwind arbitrary values, dark mode via `@custom-variant dark` plus `dark:` variants and a `.dark` class on `<html>`. Tone class strings live in `design-system/config/tone-classes.ts`. `globals.css` stays minimal.
+- A first CSS-modules attempt at the UI slice was removed and rebuilt in Tailwind after the owner set the Tailwind-only rule.
 - Use stable MCP TypeScript SDK line for production generated servers.
 - Initial generated transport: stdio.
 - Workspace packages exist for `domain`, `security`, `generator`, and `templates`.
