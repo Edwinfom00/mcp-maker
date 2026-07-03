@@ -87,7 +87,7 @@ For every feature:
 - No new dependency without explicit approval.
 - This repository is a pnpm monorepo.
 - Use pnpm for workspace commands.
-- Use `pnpm create next-app@latest apps/web` for the initial Next.js app scaffold.
+- `apps/web` was scaffolded with `pnpm create next-app@latest apps/web`.
 - Use Drizzle ORM when database persistence is introduced.
 - Use Better Auth for authentication and session management.
 - Use Drizzle with Better Auth when persistence is introduced.

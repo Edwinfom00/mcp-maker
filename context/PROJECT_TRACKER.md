@@ -4,7 +4,7 @@ Last updated: 2026-07-03
 
 ## Current Phase
 
-Foundation context complete before project scaffold.
+Foundation context complete. Monorepo scaffold initialized.
 
 The repository currently contains:
 
@@ -15,14 +15,14 @@ The repository currently contains:
 - `docs/MCP_Maker_MVP_Specification.pdf`
 - Project context files generated for Claude Code handoff
 
-There is no initialized Next.js app yet.
+The Next.js app exists at `apps/web`.
 
 ## Phase Roadmap
 
 | Phase | Goal | Status |
 |---|---|---|
 | Foundation | Context files, agent workflow, architecture plan, security baseline | Complete |
-| Scaffold | Initialize `apps/web` with `pnpm create next-app@latest apps/web` | Pending approval |
+| Scaffold | Initialize `apps/web` with `pnpm create next-app@latest apps/web` | Complete |
 | Auth | Better Auth session model, protected routes, workspace access helpers | Pending |
 | Workspace | Workspace CRUD, membership, roles, workspace switcher | Pending |
 | Project | Project CRUD, repository metadata, project lifecycle | Pending |
@@ -61,15 +61,23 @@ There is no initialized Next.js app yet.
 
 ## Dependency Decisions
 
-No application dependencies have been installed yet.
+Only scaffold dependencies have been installed for `apps/web`.
 
-No Next.js scaffold has been run yet.
+Business dependencies such as Better Auth, Drizzle, Zod, Vitest, react-icons, DeepSeek, and MCP SDK are not installed yet.
+
+Next.js scaffold has been run for `apps/web`.
 
 The root pnpm monorepo files exist:
 
 - `package.json`
 - `pnpm-workspace.yaml`
 - `packageManager` is pinned to `pnpm@10.33.3`.
+- `pnpm-lock.yaml`
+- `apps/web`
+- `packages/domain`
+- `packages/security`
+- `packages/generator`
+- `packages/templates`
 
 Auth decision:
 
@@ -102,19 +110,25 @@ Before adding any dependency, create a short proposal with:
 ## Immediate Next Tasks
 
 1. Review generated context files with the project owner.
-2. Approve or adjust scaffold command for `apps/web`.
-3. Run `pnpm create next-app@latest apps/web` only after approval.
-4. Add strict TypeScript, Biome, Drizzle, Zod, Vitest, Better Auth, DeepSeek, and MCP SDK dependencies only after explicit dependency approval.
-5. Implement auth, workspace, and project foundations before F1.
-6. Implement F1 using module-first structure.
+2. Add Better Auth, Drizzle, Zod, Vitest, react-icons, DeepSeek, and MCP SDK dependencies only after explicit dependency approval.
+3. Implement auth, workspace, and project foundations before F1.
+4. Implement F1 using module-first structure.
 
 ## Verification Notes
 
 - Context files were checked for non-ASCII characters and corrected.
-- No app build or typecheck can run yet because the application has not been scaffolded.
+- App scaffold was created with Next.js App Router, TypeScript, Tailwind, Biome, and pnpm.
 - Markdown context files have been moved into `context/`.
 - `README.md` was created at the repository root as the shared GitHub entry point.
 - Better Auth, workspace, and project context were added.
 - `apps/.gitkeep` and `packages/.gitkeep` preserve monorepo folders before scaffold.
+- Modular directories were created under `apps/web/src/modules`.
+- Workspace packages were initialized under `packages/*`.
+- `pnpm install` completed at the monorepo root.
+- `pnpm typecheck` passed.
+- `pnpm lint` passed after Biome formatting.
+- `pnpm build` passed.
+- `pnpm test` passed with the current placeholder script.
+- pnpm reported ignored build scripts for `sharp@0.34.5`; no approval was granted yet.
 - Listing remote curated skills through `skill-installer` failed because Python certificate verification failed against GitHub.
 - Local installed skills already include multiple frontend, design, brand, and skill-management skills.

@@ -6,7 +6,7 @@ The product does not promise perfect automatic generation. It analyzes a reposit
 
 ## Current Status
 
-Foundation context is ready. The application is not scaffolded yet.
+Foundation context is ready. The pnpm monorepo and `apps/web` scaffold are initialized.
 
 The repository is a pnpm monorepo:
 
@@ -18,7 +18,12 @@ The repository is a pnpm monorepo:
 |-- context/
 |-- docs/
 |-- apps/
+|   `-- web/
 |-- packages/
+|   |-- domain/
+|   |-- security/
+|   |-- generator/
+|   `-- templates/
 `-- generated-artifacts/
 ```
 
@@ -63,17 +68,15 @@ Out of scope for MVP:
 - Multi-language generators.
 - Telemetry.
 
-## Planned Scaffold
+## Workspace Packages
 
-Do not create `apps/web` manually.
+- `apps/web`: Next.js App Router application.
+- `packages/domain`: shared domain contracts and business types.
+- `packages/security`: reusable security scoring and secret detection logic.
+- `packages/generator`: generated MCP server orchestration and code generation.
+- `packages/templates`: generated server templates and static assets.
 
-When approved:
-
-```bash
-pnpm create next-app@latest apps/web
-```
-
-Project dependencies require explicit approval before installation.
+Additional project dependencies require explicit approval before installation.
 
 ## Security
 
@@ -89,7 +92,7 @@ It must not:
 
 ## Development
 
-After the app is scaffolded, root commands will delegate to the web app:
+Root commands delegate to the web app:
 
 ```bash
 pnpm dev
@@ -100,4 +103,3 @@ pnpm lint
 ```
 
 See `context/CONTRIBUTING.md` for branch, commit, push, and verification rules.
-

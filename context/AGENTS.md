@@ -104,7 +104,7 @@ Reference anchors:
 - If a dependency seems necessary, stop and propose it with justification, alternatives, and runtime or bundle impact.
 - This repository is a pnpm monorepo.
 - Use pnpm for workspace commands.
-- Use `pnpm create next-app@latest apps/web` for the initial Next.js project scaffold.
+- `apps/web` was scaffolded with `pnpm create next-app@latest apps/web`.
 - Do not manually scaffold the Next.js app structure.
 - Use latest stable package versions when dependencies are approved.
 - Use Drizzle ORM for database interactions.
@@ -122,6 +122,7 @@ Reference anchors:
 - No `React.FC`.
 - Named exports only.
 - No default exports.
+- Exception: Next.js App Router entry files such as `page.tsx`, `layout.tsx`, `route.ts`, `loading.tsx`, and `error.tsx` may use framework-required default exports. Prefer a named function followed by the required default export.
 - No inline styles.
 - No code comments unless the owner explicitly changes this rule.
 - No production `console.log`.
@@ -154,7 +155,7 @@ Reference anchors:
 
 ## Tech Stack
 
-Target stack after approval and scaffold:
+Current stack after scaffold:
 
 | Technology | Purpose |
 |---|---|
@@ -174,7 +175,7 @@ Target stack after approval and scaffold:
 
 ## Correct Repository Architecture
 
-Current repository is pre-scaffold. Target architecture:
+Current repository architecture:
 
 ```text
 .
@@ -512,10 +513,10 @@ Use the handoff format in `context/CLAUDE_WORKFLOW.md`.
 
 ## Current Status
 
-The project is not initialized as a Next.js app yet.
+The project is initialized as a pnpm monorepo with a Next.js app at `apps/web`.
 
-Before scaffolding:
+Before adding product features:
 
 1. Review the context files.
-2. Ask for approval to run `pnpm create next-app@latest apps/web`.
-3. Ask for dependency approval before installing project dependencies.
+2. Ask for dependency approval before installing product dependencies.
+3. Implement auth, workspace, and project foundations before F1.

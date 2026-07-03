@@ -40,11 +40,15 @@ Target shape after initialization:
 |       |-- package.json
 |       `-- tsconfig.json
 |-- packages/
+|   |-- domain/
+|   |-- security/
+|   |-- generator/
+|   `-- templates/
 `-- generated-artifacts/
     `-- .gitkeep
 ```
 
-This is a pnpm monorepo. Do not manually scaffold `apps/web`. Use `pnpm create next-app@latest apps/web`.
+This is a pnpm monorepo. `apps/web` was scaffolded with `pnpm create next-app@latest apps/web`; do not recreate it manually.
 
 ## Workspace Boundaries
 
@@ -55,6 +59,13 @@ The pnpm workspace owns application and shared source code:
 - `generated-artifacts/`: temporary generated output and ZIP artifacts, not source packages.
 
 Generated MCP server projects are export artifacts by default. Do not add them to `pnpm-workspace.yaml` unless the user explicitly asks for a generated server to become a maintained workspace package.
+
+Initial workspace packages:
+
+- `@mcp-maker/domain`: shared domain contracts, object shapes, and cross-module types.
+- `@mcp-maker/security`: risk scoring, secret detection, and permission helpers.
+- `@mcp-maker/generator`: generated MCP server orchestration and code generation.
+- `@mcp-maker/templates`: generated server templates and static assets.
 
 ## Application Modules
 

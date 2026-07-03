@@ -5,7 +5,7 @@
 - Project name: MCP Server Maker.
 - Short name: MCP Maker.
 - Date of current foundation pass: 2026-07-03.
-- The project is pre-scaffold.
+- The project has a scaffolded pnpm monorepo foundation.
 - Existing source of truth: `context/AGENTS.md` and `docs/MCP_Maker_MVP_Specification.pdf`.
 - The repository is a pnpm monorepo.
 - Root `README.md` is allowed as the GitHub project entry point.
@@ -20,7 +20,7 @@
 ## Current Technical Decisions
 
 - Use Next.js App Router for the web app.
-- Use `pnpm create next-app@latest apps/web` to scaffold `apps/web`.
+- `apps/web` was scaffolded with `pnpm create next-app@latest apps/web`.
 - Use TypeScript strict mode.
 - Use Drizzle ORM when persistence is introduced.
 - Use Better Auth for authentication and session management.
@@ -32,6 +32,7 @@
 - Use `react-icons` for icons per `context/AGENTS.md`.
 - Use stable MCP TypeScript SDK line for production generated servers.
 - Initial generated transport: stdio.
+- Workspace packages exist for `domain`, `security`, `generator`, and `templates`.
 - Product workspaces group users, projects, settings, and artifacts.
 - Projects represent imported GitHub repositories and their MCP generation lifecycle.
 - Every project belongs to exactly one workspace.
@@ -86,5 +87,26 @@ Created root pnpm monorepo files:
 Created root `README.md`.
 
 Integrated Better Auth, workspace, and project context across architecture, security, tracker, memory, prompt, and agent instructions.
+
+Initialized `apps/web` with Next.js App Router, TypeScript, Tailwind, Biome, pnpm, `src/`, and alias `@/*`.
+
+Created modular skeleton directories under `apps/web/src/modules`.
+
+Created workspace packages:
+
+- `packages/domain`
+- `packages/security`
+- `packages/generator`
+- `packages/templates`
+
+Verification after scaffold:
+
+- `pnpm install`
+- `pnpm typecheck`
+- `pnpm lint`
+- `pnpm build`
+- `pnpm test`
+
+pnpm reported ignored build scripts for `sharp@0.34.5`; leave unapproved until a concrete image-processing need requires it.
 
 Remote curated skill listing failed through `skill-installer` because Python certificate verification failed against GitHub. Locally installed skills already cover frontend design, image generation, brand kit generation, UI review, skill installation, skill creation, and OpenAI docs.
