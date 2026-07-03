@@ -4,7 +4,7 @@ Last updated: 2026-07-03
 
 ## Current Phase
 
-Foundation context complete. Monorepo scaffold initialized.
+Foundation context complete. Monorepo scaffold initialized. Prototype interface audit complete.
 
 The repository currently contains:
 
@@ -23,6 +23,7 @@ The Next.js app exists at `apps/web`.
 |---|---|---|
 | Foundation | Context files, agent workflow, architecture plan, security baseline | Complete |
 | Scaffold | Initialize `apps/web` with `pnpm create next-app@latest apps/web` | Complete |
+| Prototype Audit | Review `_proto` interface direction and update implementation prompt | Complete |
 | Auth | Better Auth session model, protected routes, workspace access helpers | Pending |
 | Workspace | Workspace CRUD, membership, roles, workspace switcher | Pending |
 | Project | Project CRUD, repository metadata, project lifecycle | Pending |
@@ -109,7 +110,7 @@ Before adding any dependency, create a short proposal with:
 
 ## Immediate Next Tasks
 
-1. Review generated context files with the project owner.
+1. Use `context/PROMPT_DESIGN_2.md` to implement the `_proto` interfaces faithfully.
 2. Add Better Auth, Drizzle, Zod, Vitest, react-icons, DeepSeek, and MCP SDK dependencies only after explicit dependency approval.
 3. Implement auth, workspace, and project foundations before F1.
 4. Implement F1 using module-first structure.
@@ -132,3 +133,7 @@ Before adding any dependency, create a short proposal with:
 - pnpm reported ignored build scripts for `sharp@0.34.5`; no approval was granted yet.
 - Listing remote curated skills through `skill-installer` failed because Python certificate verification failed against GitHub.
 - Local installed skills already include multiple frontend, design, brand, and skill-management skills.
+- `_proto` was reviewed as the visual source of truth for the MVP interface.
+- `context/PROTO_INTERFACE_REVIEW.md` records the interface verdict, required corrections, and implementation readiness.
+- `context/PROMPT_DESIGN_2.md` was upgraded into a pixel-faithful implementation prompt for Claude Code.
+- `context/SKILLS.md` records the local skill stack required for design and implementation handoff.

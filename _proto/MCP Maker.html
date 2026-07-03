@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>MCP Maker — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"/>
+<style>
+  html, body { margin:0; padding:0; height:100%; background:#f0eee9; font-family:"Inter",-apple-system,BlinkMacSystemFont,system-ui,sans-serif; }
+  * { box-sizing: border-box; }
+  #root { height: 100%; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="mcp-maker/theme.jsx"></script>
+<script type="text/babel" src="mcp-maker/ui.jsx"></script>
+<script type="text/babel" src="mcp-maker/shell.jsx"></script>
+
+<script type="text/babel" src="mcp-maker/screens/auth.jsx"></script>
+<script type="text/babel" src="mcp-maker/screens/dashboard.jsx"></script>
+<script type="text/babel" src="mcp-maker/screens/analysis.jsx"></script>
+<script type="text/babel" src="mcp-maker/screens/tools.jsx"></script>
+<script type="text/babel" src="mcp-maker/screens/validation.jsx"></script>
+<script type="text/babel" src="mcp-maker/screens/mobile-and-dark.jsx"></script>
+
+<script type="text/babel">
+const { Btn, Pill, RiskBadge } = window;
+
+const App = () => (
+  <DesignCanvas>
+    <DCSection id="auth" title="Auth & workspace" subtitle="Sign-in and workspace selection">
+      <DCArtboard id="signin" label="1 · Sign-in" width={1180} height={720}>
+        <SignInScreen/>
+      </DCArtboard>
+      <DCArtboard id="workspace" label="2 · Workspace selection" width={720} height={640}>
+        <WorkspaceScreen/>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="intake" title="Project intake" subtitle="Dashboard and repository intake">
+      <DCArtboard id="projects" label="3 · Project dashboard" width={1220} height={600}>
+        <Shell active="projects" project={null} title="Projects" T={MCP}
+          actions={<Btn variant="primary" icon="plus">New project</Btn>}>
+          <ProjectDashboardScreen/>
+        </Shell>
+      </DCArtboard>
+      <DCArtboard id="start" label="4 · Start screen (GitHub URL + mode)" width={1100} height={780}>
+        <Shell active="projects" breadcrumb={['Projects']} title="New project" T={MCP}>
+          <StartScreen/>
+        </Shell>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="analyze" title="Analysis" subtitle="Progress, then architecture summary">
+      <DCArtboard id="progress" label="5 · Analysis progress" width={1180} height={620}>
+        <Shell active="projects" project="stripe-webhook-router" breadcrumb={['Projects', 'stripe-webhook-router']} title="Analyzing" T={MCP}>
+          <AnalysisProgressScreen/>
+        </Shell>
+      </DCArtboard>
+      <DCArtboard id="summary" label="6 · Architecture summary" width={1180} height={780}>
+        <Shell active="projects" project="stripe-webhook-router" breadcrumb={['Projects', 'stripe-webhook-router']} title="Architecture summary" T={MCP}>
+          <ArchitectureSummaryScreen/>
+        </Shell>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="review" title="Tools & security" subtitle="Proposal, then review">
+      <DCArtboard id="proposal" label="7 · Tool proposal" width={1220} height={920}>
+        <Shell active="projects" project="stripe-webhook-router" breadcrumb={['stripe-webhook-router', 'Tools']} title="Tool proposal" T={MCP}>
+          <ToolProposalScreen/>
+        </Shell>
+      </DCArtboard>
+      <DCArtboard id="security" label="8 · Security review" width={1140} height={840}>
+        <Shell active="projects" project="stripe-webhook-router" breadcrumb={['stripe-webhook-router', 'Security review']} title="Security review" T={MCP}>
+          <SecurityReviewScreen/>
+        </Shell>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="finalize" title="Validation & export" subtitle="Human sign-off, then generation">
+      <DCArtboard id="validation" label="9 · Human validation" width={1220} height={680}>
+        <Shell active="projects" project="stripe-webhook-router" breadcrumb={['stripe-webhook-router', 'Validate']} title="Human validation" T={MCP}>
+          <HumanValidationScreen/>
+        </Shell>
+      </DCArtboard>
+      <DCArtboard id="generation" label="10 · Generation & export" width={1140} height={680}>
+        <Shell active="projects" project="stripe-webhook-router" breadcrumb={['stripe-webhook-router', 'Generate']} title="Generate server" T={MCP}>
+          <GenerationScreen/>
+        </Shell>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="mobile" title="Mobile layouts" subtitle="3 key screens on mobile">
+      <DCArtboard id="m-signin" label="Mobile · Sign-in" width={390} height={780}>
+        <MobileSignIn/>
+      </DCArtboard>
+      <DCArtboard id="m-dashboard" label="Mobile · Project dashboard" width={390} height={780}>
+        <MobileDashboard/>
+      </DCArtboard>
+      <DCArtboard id="m-proposal" label="Mobile · Tool proposal" width={390} height={780}>
+        <MobileToolProposal/>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="dark" title="Dark mode direction" subtitle="Same system, alternate palette">
+      <DCArtboard id="dark-dashboard" label="Dark · Project dashboard" width={1220} height={600}>
+        <DarkDashboardBonus/>
+      </DCArtboard>
+    </DCSection>
+
+    <DCSection id="components" title="Components" subtitle="Risk badge system, in isolation">
+      <DCArtboard id="badges" label="Risk badges & pills" width={480} height={320}>
+        <div style={{ height: '100%', background: MCP.bg, padding: 26, fontFamily: MCP.font, display: 'flex', flexDirection: 'column', gap: 18 }}>
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 600, color: MCP.textFaint, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 10 }}>Risk levels</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {['readonly', 'write', 'destructive', 'blocked'].map(r => <RiskBadge key={r} level={r} size="lg"/>)}
+            </div>
+          </div>
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 600, color: MCP.textFaint, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 10 }}>Status pills</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              <Pill tone="safe" dot>Ready</Pill>
+              <Pill tone="caution" dot>Awaiting validation</Pill>
+              <Pill tone="info" dot>Analyzing</Pill>
+              <Pill tone="danger" dot>Failed</Pill>
+            </div>
+          </div>
+        </div>
+      </DCArtboard>
+    </DCSection>
+  </DesignCanvas>
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

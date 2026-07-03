@@ -45,7 +45,6 @@
 - Whether clone uses `git` process directly or an approved library.
 - Whether AST parsing uses TypeScript compiler APIs, Babel parser, or ts-morph.
 - Whether ZIP packaging uses platform `zip`, Node APIs, or an approved package.
-- Final UI visual direction after prototype generation.
 
 ## Agent Operating Memory
 
@@ -110,3 +109,13 @@ Verification after scaffold:
 pnpm reported ignored build scripts for `sharp@0.34.5`; leave unapproved until a concrete image-processing need requires it.
 
 Remote curated skill listing failed through `skill-installer` because Python certificate verification failed against GitHub. Locally installed skills already cover frontend design, image generation, brand kit generation, UI review, skill installation, skill creation, and OpenAI docs.
+
+Prototype interface review completed:
+
+- `_proto` is accepted as the visual and flow source of truth for the MVP interface.
+- Production implementation must translate the prototype into modular Next.js components, not copy inline-style prototype code.
+- `context/PROTO_INTERFACE_REVIEW.md` records the verdict and required corrections.
+- `context/PROMPT_DESIGN_2.md` is now the strict prompt for pixel-faithful implementation.
+- `context/SKILLS.md` records the required local skill stack for the handoff.
+- Replace generic prototype placeholders such as `Acme Corp` and `acme/*` with safer seeded examples.
+- Preserve Better Auth, workspace scope, project scope, risk gates, source references, human validation, validation report, ZIP export, mobile, and dark mode behavior.
